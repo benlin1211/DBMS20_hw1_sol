@@ -51,7 +51,9 @@ with open('participants.csv', 'r') as fr, open('new_participants.csv', 'w') as f
         32: 'Snowball',
         31: 'PoroThrow',
         30: 'PoroRecall',
-        12: 'Teleport'
+        12: 'Teleport',
+        2: "Others",
+        10: "Others"
     }
 
     writer.writerow(['player_id', 'match_id', 'player', 'champion_id', 'ss1', 'ss2',\
@@ -60,9 +62,9 @@ with open('participants.csv', 'r') as fr, open('new_participants.csv', 'w') as f
     length = 0
     # print('player_id', 'match_id', 'player', 'champion_id', 'ss1', 'ss2','position')
     for row in rows:
-        if row[4] == '2' or row[4] == '10' or row[5] == '2' or row[5] == '10':
-            print(champs[int(row[3])], row)
-            continue
+        # if row[4] == '2' or row[4] == '10' or row[5] == '2' or row[5] == '10':
+        #     print(champs[int(row[3])], row)
+        #     continue
         ss1 = spells_mapping[int(row[4])]
         ss2 = spells_mapping[int(row[5])]
 
