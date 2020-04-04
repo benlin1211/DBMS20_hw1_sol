@@ -1,18 +1,14 @@
 -- 在LOL角色中，有些角色會比較容易打贏或打輸特定角色。列出當上路 (TOP) 對手為雷尼克頓 (Renekton) 時，上路 (TOP) 角色勝率（參考第九題定義）最高的前五隻英雄，並列出上路 (TOP) 雙方的總擊殺參與率 (總KDA，參考第七題定義) 與平均經濟 (goldearned)。這邊我們只在乎與雷尼克頓 (Renekton) 對峙的資料大於100筆的英雄
 
-select filt.self_champ_name, (filt.sum_win/filt.cnt) as win_ratio, 
-    (filt.self_sum_kills+filt.self_sum_assists)/filt.self_sum_deaths as self_kda, 
-    filt.self_avg_gold, filt.enem_champ_name, 
-    (filt.enem_sum_kills+filt.enem_sum_assists)/filt.enem_sum_deaths as enemy_kda,
-    filt.enem_avg_gold
+select filt.self_champ_name, (filt.sum_win/filt.cnt) as win_ratio, filt.self_kda, 
+    filt.self_avg_gold, filt.enem_champ_name, filt.enem_kda, filt.enem_avg_gold
 from 
 (
     select un2.self_champ_name, count(un2.self_champ_name) as cnt, 
-        sum(un2.self_win) as sum_win, sum(un2.self_kills) as self_sum_kills,
-        sum(un2.self_deaths) as self_sum_deaths, sum(un2.self_assists) as self_sum_assists, 
+        sum(un2.self_win) as sum_win, 
+        (sum(un2.self_kills)+sum(un2.self_assists))/sum(un2.self_deaths) as self_kda,
         avg(un2.self_gold) as self_avg_gold, un2.enem_champ_name, 
-        sum(sub_stat2.kills) as enem_sum_kills, sum(sub_stat2.deaths) as enem_sum_deaths, 
-        sum(sub_stat2.assists) as enem_sum_assists, 
+        (sum(sub_stat2.kills)+sum(sub_stat2.assists))/sum(sub_stat2.deaths) as enem_kda, 
         avg(sub_stat2.goldearned) as enem_avg_gold
     from
     (
