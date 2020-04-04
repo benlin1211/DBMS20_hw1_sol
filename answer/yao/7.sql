@@ -16,4 +16,4 @@ FROM
 WHERE c.champion_id = info.champion_id
 AND info.total_death != 0
 GROUP BY info.position
-ORDER BY info.position
+ORDER BY info.position;

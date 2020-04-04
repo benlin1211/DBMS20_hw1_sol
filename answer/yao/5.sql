@@ -9,4 +9,4 @@ FROM
     GROUP BY p.match_id, teamgroup
 ) as team
 WHERE team.avgtime >= 1200
-GROUP BY team.win
+GROUP BY team.win;
