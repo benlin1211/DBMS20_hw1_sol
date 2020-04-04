@@ -25,4 +25,5 @@ from
     ) as grp_pos_champ
     group by grp_pos_champ.position
 ) as final, champ
-where final.champion_id = champ.champion_id;
+where final.champion_id = champ.champion_id
+order by final.position;
