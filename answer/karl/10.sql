@@ -24,14 +24,14 @@ from
             (
                 select par.player_id, par.match_id, champ.champion_name
                 from participant as par, champ
-                where player < 6
+                where par.player < 6
                 and par.position = 'TOP'
                 and champ.champion_id = par.champion_id
             ) as p1,
             (
                 select par.player_id, par.match_id, champ.champion_name
                 from participant as par, champ
-                where player > 5
+                where par.player > 5
                 and par.position = 'TOP'
                 and champ.champion_id = par.champion_id
             ) as p2
@@ -44,14 +44,14 @@ from
             (
                 select par.player_id, par.match_id, champ.champion_name
                 from participant as par, champ
-                where player < 6
+                where par.player < 6
                 and par.position = 'TOP'
                 and champ.champion_id = par.champion_id
             ) as p1,
             (
                 select par.player_id, par.match_id, champ.champion_name
                 from participant as par, champ
-                where player > 5
+                where par.player > 5
                 and par.position = 'TOP'
                 and champ.champion_id = par.champion_id
             ) as p2
