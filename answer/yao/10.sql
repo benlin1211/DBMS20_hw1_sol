@@ -3,7 +3,7 @@
 SELECT *
 FROM
 (
-    SELECT self_champ_name, SUM(self_win) / COUNT(*) as win_ratio, (SUM(self_kills)+SUM(self_assists)) / SUM(self_deaths) as self_kda, AVG(self_gold) as self_avg_gold, enemy_champ_name, (SUM(enemy_kills)+SUM(enemy_assists)) / SUM(enemy_deaths) as enemy_kda, AVG(enemy_gold) as enemy_avg_gold, COUNT(*) as game
+    SELECT self_champ_name, SUM(self_win) / COUNT(*) as win_ratio, (SUM(self_kills)+SUM(self_assists)) / SUM(self_deaths) as self_kda, AVG(self_gold) as self_avg_gold, enemy_champ_name, (SUM(enemy_kills)+SUM(enemy_assists)) / SUM(enemy_deaths) as enemy_kda, AVG(enemy_gold) as enemy_avg_gold, COUNT(*) as battle_record
     FROM
     (
         SELECT infoA.champion_name as self_champ_name, infoA.win as self_win, infoA.kills as self_kills, infoA.assists as self_assists, infoA.deaths as self_deaths, infoA.goldearned as self_gold, infoB.champion_name as enemy_champ_name, infoB.win as enemy_win, infoB.kills as enemy_kills, infoB.assists as enemy_assists, infoB.deaths as enemy_deaths, infoB.goldearned as enemy_gold
@@ -30,6 +30,6 @@ FROM
     ) as combine
     GROUP BY combine.self_champ_name, combine.enemy_champ_name
 ) as final
-WHERE game >= 100
+WHERE battle_record >= 100
 ORDER BY win_ratio DESC
 LIMIT 5;

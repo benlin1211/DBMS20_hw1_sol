@@ -17,16 +17,3 @@ from
 ) as grp_stat
 where grp_stat.avg_living >= 1200
 group by grp_stat.win;
-
--------------------------------------------------
-
-select team.win, count(team.win)
-from
-(
-    select p.match_id, s.win, floor(player/6) as teamgroup, avg(s.longesttimespentliving) as avgtime
-    from participant as p, stat as s
-    where p.player_id = s.player_id
-    group by p.match_id, teamgroup
-) as team
-where team.avgtime >= 1200
-group by team.win;
