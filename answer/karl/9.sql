@@ -1,6 +1,6 @@
 -- 某知名實況主曾言：你李星 (Lee Sin) 我提摩 (Teemo)。請列出在各個版本 (version) 中（小數點前二位相同即為同一版本，反之則不同），當李星 (Lee Sin) 與提摩 (Teemo) 在同一隊時，勝場、敗場與勝率（勝場／敗場）分別為何
 
-select substring_index(match_info.version, '.', 2) as ver, sum(par_champ_stat_cnt.win) as win,
+select substring_index(match_info.version, '.', 2) as version, sum(par_champ_stat_cnt.win) as win_cnt,
     count(*)-sum(par_champ_stat_cnt.win) as lose_cnt, (sum(par_champ_stat_cnt.win)/count(*)) as win_ratio
 from match_info,
 (
@@ -29,4 +29,4 @@ from match_info,
 ) as par_champ_stat_cnt
 where par_champ_stat_cnt.cnt > 1
 and par_champ_stat_cnt.match_id = match_info.match_id
-group by ver;
+group by substring_index(match_info.version, '.', 2);
