@@ -3,7 +3,7 @@
 select final.position, champ.champion_name
 from
 (
-    select grp_pos_champ.position, max(grp_pos_champ.cnt), grp_pos_champ.champion_id
+    select list.position, list.champion_id
     from
     (
         select position, champion_id, count(champion_id) as cnt
@@ -22,8 +22,32 @@ from
         where par.match_id = dur_match.match_id
         group by position, champion_id
         order by cnt desc
-    ) as grp_pos_champ
-    group by grp_pos_champ.position
+    ) as list,
+    (
+        select grp_pos_champ.position, max(grp_pos_champ.cnt) as cnt
+        from
+        (
+            select position, champion_id, count(champion_id) as cnt
+            from
+            (
+                select match_id
+                from match_info
+                where duration >= 2400 and duration <= 3000
+            ) as dur_match, 
+            (
+                select match_id, champion_id, position
+                from participant
+                where position = 'TOP' or position = 'MID' or position = 'JUNGLE'
+                or position = 'DUO_CARRY' or position = 'DUO_SUPPORT'
+            ) as par
+            where par.match_id = dur_match.match_id
+            group by position, champion_id
+            order by cnt desc
+        ) as grp_pos_champ
+        group by grp_pos_champ.position
+    ) as tmp
+    where list.position = tmp.position
+    and list.cnt = tmp.cnt
 ) as final, champ
 where final.champion_id = champ.champion_id
 order by final.position;
