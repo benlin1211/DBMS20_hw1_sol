@@ -29,4 +29,5 @@ from match_info,
 ) as par_champ_stat_cnt
 where par_champ_stat_cnt.cnt > 1
 and par_champ_stat_cnt.match_id = match_info.match_id
-group by substring_index(match_info.version, '.', 2);
+group by substring_index(match_info.version, '.', 2)
+order by substring_index(match_info.version, '.', 2) asc;
