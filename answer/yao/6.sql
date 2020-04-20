@@ -1,6 +1,6 @@
 -- 在LOL中，有時會刻意選擇前/後期英雄確保遊戲時間進行到前/後面能有很大的勝率。列出當比賽遊戲時間在40~50分鐘 (duration) (皆包含邊界時間) 時五個位置 (TOP/MID/JUNGLE/DUO_CARRY/DUO_SUPPORT) 分別出現最多次的英雄（提示：between）
 
-SELECT info.position, c.champion_name
+SELECT info.position, ANY_VALUE(c.champion_name)
 FROM
 (
     SELECT p.champion_id, p.position, COUNT(*) as appear
