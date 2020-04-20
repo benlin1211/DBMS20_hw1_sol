@@ -6,14 +6,14 @@ FROM
     SELECT *, COUNT(*) as cnt
     FROM
     (
-        SELECT p.match_id, c.champion_name, s.win, floor(player / 6) as teamgroup
+        SELECT p.match_id, s.win
         FROM participant as p, stat as s, champ as c
         WHERE p.player_id = s.player_id
         AND p.champion_id = c.champion_id
         AND (c.champion_name = 'Teemo'
         OR c.champion_name = 'Lee Sin')
     ) as info
-    GROUP BY info.match_id, info.teamgroup
+    GROUP BY info.match_id, info.win
 ) as candidate_group, match_info as m
 WHERE candidate_group.cnt = 2
 AND candidate_group.match_id = m.match_id
